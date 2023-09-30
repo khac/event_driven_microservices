@@ -3,7 +3,9 @@ package com.microservices.demo.twitter.to.kakfa.service.runner.impl;
 import com.microservices.demo.twitter.to.kakfa.service.config.TwitterToKafkaServiceConfigData;
 import com.microservices.demo.twitter.to.kakfa.service.listener.TwitterKafkaStatusListener;
 import com.microservices.demo.twitter.to.kakfa.service.runner.StreamRunner;
-import jakarta.annotation.PreDestroy;
+//import javax.annotation.PreDestroy;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import twitter4j.*;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,8 @@ import org.slf4j.Logger;
 import java.util.Arrays;
 
 @Component
+//@ConditionalOnProperty(name="twitter-to-kafka-service.enable-v2-tweets", havingValue = "false")
+@ConditionalOnExpression("${twitter-to-kafka--service.enable-mock-tweets} && not ${tweet-to-kafka-service.enable-v2-tweets}")
 public class TwitterKafkaStreamRunner implements StreamRunner {
 
     private static final Logger LOG = LoggerFactory.getLogger(TwitterKafkaStreamRunner.class);
@@ -22,9 +26,9 @@ public class TwitterKafkaStreamRunner implements StreamRunner {
     private TwitterStream twitterStream;
 
     public TwitterKafkaStreamRunner(TwitterToKafkaServiceConfigData configData,
-                                    TwitterKafkaStatusListener twitterKafkaStatusListerner) {
+                                    TwitterKafkaStatusListener twitterKafkaStatusListener) {
         this.twitterToKafkaServiceConfigData = configData;
-        this.twitterKafkaStatusListener = twitterKafkaStatusListerner;
+        this.twitterKafkaStatusListener = twitterKafkaStatusListener;
     }
 
     @Override
@@ -34,7 +38,7 @@ public class TwitterKafkaStreamRunner implements StreamRunner {
         addFilter();
     }
 
-    @PreDestroy
+//    @PreDestroy
     public void shutdown() {
         if (twitterStream != null) {
             LOG.info("Closing twitter stream!");

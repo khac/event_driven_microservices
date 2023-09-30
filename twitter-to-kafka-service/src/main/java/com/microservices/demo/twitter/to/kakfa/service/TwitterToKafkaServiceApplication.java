@@ -16,10 +16,9 @@ import java.util.Arrays;
 public class TwitterToKafkaServiceApplication implements CommandLineRunner {
 
     private static final Logger LOG = LoggerFactory.getLogger(TwitterToKafkaServiceApplication.class);
-
     private final TwitterToKafkaServiceConfigData twitterToKafkaServiceConfigData;
-
     private final StreamRunner streamRunner;
+
     @Autowired
     public TwitterToKafkaServiceApplication(TwitterToKafkaServiceConfigData configData, StreamRunner runner) {
         this.twitterToKafkaServiceConfigData = configData;
