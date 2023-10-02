@@ -3,14 +3,18 @@ package com.microservices.demo.twitter.to.kakfa.service.runner.impl;
 import com.microservices.demo.twitter.to.kakfa.service.config.TwitterToKafkaServiceConfigData;
 import com.microservices.demo.twitter.to.kakfa.service.listener.TwitterKafkaStatusListener;
 import com.microservices.demo.twitter.to.kakfa.service.runner.StreamRunner;
-//import javax.annotation.PreDestroy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
-import twitter4j.*;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
+import twitter4j.FilterQuery;
+import twitter4j.TwitterException;
+import twitter4j.TwitterStream;
+import twitter4j.TwitterStreamFactory;
 
+import javax.annotation.PreDestroy;
 import java.util.Arrays;
 
 @Component
@@ -38,7 +42,7 @@ public class TwitterKafkaStreamRunner implements StreamRunner {
         addFilter();
     }
 
-//    @PreDestroy
+    @PreDestroy
     public void shutdown() {
         if (twitterStream != null) {
             LOG.info("Closing twitter stream!");

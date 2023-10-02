@@ -32,7 +32,7 @@ public class TwitterV2KafkaStreamRunner implements StreamRunner {
         this.twitterV2StreamHelper = twitterV2StreamHelper;
     }
     @Override
-    public void start() throws TwitterException, IOException, URISyntaxException {
+    public void start() {
         String bearerToken = twitterToKafkaServiceConfigData.getTwitterV2BearerToken();
         if (bearerToken != null) {
             try {
