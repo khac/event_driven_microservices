@@ -1,6 +1,6 @@
 package com.microservices.demo.twitter.to.kakfa.service.runner.impl;
 
-import com.microservices.demo.twitter.to.kakfa.service.config.TwitterToKafkaServiceConfigData;
+import com.microservices.demo.config.TwitterToKafkaServiceConfigData;
 import com.microservices.demo.twitter.to.kakfa.service.listener.TwitterKafkaStatusListener;
 import org.apache.http.client.HttpClient;
 import org.apache.http.HttpEntity;
@@ -37,7 +37,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @ConditionalOnProperty(name="twitter-to-kafka-service.enable-v2-tweets", havingValue="true", matchIfMissing = true)
 public class TwitterV2StreamHelper {
     private static final Logger LOG = LoggerFactory.getLogger(TwitterV2StreamHelper.class);
-    private final  TwitterToKafkaServiceConfigData twitterToKafkaServiceConfigData;
+    private final TwitterToKafkaServiceConfigData twitterToKafkaServiceConfigData;
     private final TwitterKafkaStatusListener twitterKafkaStatusListener;
 
     private static final String tweetAsRawJson = "{" +
